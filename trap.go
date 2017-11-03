@@ -180,13 +180,14 @@ func (x *GoSNMP) UnmarshalTrap(trap []byte) (result *SnmpPacket) {
 	}
 
 	if result.Version == Version3 {
-		if result.SecurityModel == UserSecurityModel {
-			err = x.testAuthentication(trap, result)
-			if err != nil {
-				x.logPrintf("UnmarshalTrap v3 auth: %s\n", err)
-				return nil
-			}
-		}
+		// Disabled because it upsets Huawei AR503s
+		//if result.SecurityModel == UserSecurityModel {
+		//	err = x.testAuthentication(trap, result)
+		//	if err != nil {
+		//		x.logPrintf("UnmarshalTrap v3 auth: %s\n", err)
+		//		return nil
+		//	}
+		//}
 		trap, cursor, err = x.decryptPacket(trap, cursor, result)
 	}
 	err = x.unmarshalPayload(trap, cursor, result)

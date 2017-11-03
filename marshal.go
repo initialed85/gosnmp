@@ -202,11 +202,12 @@ func (x *GoSNMP) sendOneRequest(packetOut *SnmpPacket,
 			}
 
 			if x.Version == Version3 {
-				err = x.testAuthentication(resp, result)
-				if err != nil {
-					x.logPrintf("ERROR on Test Authentication on v3: %s", err)
-					break
-				}
+				// Disabled because it upsets Huawei AR503s
+				//err = x.testAuthentication(resp, result)
+				//if err != nil {
+				//	x.logPrintf("ERROR on Test Authentication on v3: %s", err)
+				//	break
+				//}
 				resp, cursor, err = x.decryptPacket(resp, cursor, result)
 			}
 
